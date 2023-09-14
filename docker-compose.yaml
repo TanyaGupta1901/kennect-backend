@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  server:
+    container_name: kennect-server
+    build: ./server
+    ports:
+      - "5500:5500"
+    depends_on:
+      - mongodb
+    networks:
+      - kennect-network
+
+  client:
+    container_name: kennect-client
+    build: ./client
+    ports:
+      - "3000:3000"
+    depends_on:
+      - server
+    networks:
+      - kennect-network
+
+  mongodb:
+    image: mongo:6-jammy
+    ports:
+      - '27017:27017'
+    networks:
+      - kennect-network
+  
